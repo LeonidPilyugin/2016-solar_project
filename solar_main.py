@@ -34,12 +34,16 @@ def execution():
     """
     global physical_time
     global displayed_time
+    global output
     recalculate_space_objects_positions(space_objects, time_step.get())
     for body in space_objects:
         update_object_position(space, body)
     physical_time += time_step.get()
     displayed_time.set("%.1f" % physical_time + " seconds gone")
-
+    print(physical_time, end="\n", file=output)
+    for body in space_objects:
+        print(body, end="\n", file=output)
+    print("", end="\n", file=output)
     if perform_execution:
         space.after(101 - int(time_speed.get()), execution)
 
@@ -75,6 +79,7 @@ def open_file_dialog():
     """
     global space_objects
     global perform_execution
+    global output
     perform_execution = False
     for obj in space_objects:
         space.delete(obj.image)  # удаление старых изображений планет
@@ -90,6 +95,10 @@ def open_file_dialog():
             create_planet_image(space, obj)
         else:
             raise AssertionError()
+        
+    if len(space_objects) > 0:
+        output.close()
+        output = open("stats.txt", "w")
 
 
 def save_file_dialog():
@@ -111,6 +120,9 @@ def main():
     global time_speed
     global space
     global start_button
+    global output
+    
+    output = open("stats.txt", "w")
 
     print('Modelling started!')
     physical_time = 0
@@ -147,6 +159,7 @@ def main():
 
     root.mainloop()
     print('Modelling finished!')
+    output.close()
 
 if __name__ == "__main__":
     main()

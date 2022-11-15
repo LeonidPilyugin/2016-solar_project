@@ -2,4 +2,4 @@
 star 30 red 1.98892E30 0 0 0 0
 
 # Земля
-planet 5 green 5.974E24 149.60E9 0 0 29.76E3
+planet 5 green 5.974E24 149.60E9 0 -10e3 30e3
