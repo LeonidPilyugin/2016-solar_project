@@ -97,6 +97,7 @@ def plot_rt(file = None):
 if __name__ == "__main__":
     read()
     plot_rt("rt.png")
-    plot_vt("vt.png")
+    plt.clf()
     plot_vr("vr.png")
-
+    plt.clf()
+    plot_vt("vt.png")
