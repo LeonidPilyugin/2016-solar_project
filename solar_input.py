@@ -19,10 +19,14 @@ def read_space_objects_data_from_file(input_filename):
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
             object_type = line.split()[0].lower()
-            if object_type == "star":  # FIXME: do the same for planet
+            if object_type == "star":
                 star = Star()
                 parse_star_parameters(line, star)
                 objects.append(star)
+            elif object_type == "planet":
+                planet = Planet()
+                parse_planet_parameters(line, planet)
+                objects.append(planet)
             else:
                 print("Unknown space object")
 
@@ -44,7 +48,16 @@ def parse_star_parameters(line, star):
     **star** — объект звезды.
     """
 
-    pass  # FIXME: not done yet
+    star_parameters = [str(i) for i in line.split()]
+    star.type = star_parameters[0]
+    star.R = int(star_parameters[1])
+    star.color = star_parameters[2]
+    star.m = int(star_parameters[3])
+    star.x = int(star_parameters[4])
+    star.y = int(star_parameters[5])
+    star.Vx = int(star_parameters[6])
+    star.Vy = int(star_parameters[7])
+
 
 def parse_planet_parameters(line, planet):
     """Считывает данные о планете из строки.
@@ -61,7 +74,15 @@ def parse_planet_parameters(line, planet):
     **line** — строка с описание планеты.
     **planet** — объект планеты.
     """
-    pass  # FIXME: not done yet...
+    planet_parameters = [str(i) for i in line.split()]
+    planet.type = planet_parameters[0]
+    planet.R = int(planet_parameters[1])
+    planet.color = planet_parameters[2]
+    planet.m = int(planet_parameters[3])
+    planet.x = int(planet_parameters[4])
+    planet.y = int(planet_parameters[5])
+    planet.Vx = int(planet_parameters[6])
+    planet.Vy = int(planet_parameters[7])
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
@@ -77,8 +98,11 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
-            # FIXME: should store real values
+            print(obj.type + str(obj.R) +
+                  obj.color + str(obj.m) + str(obj.x) +
+                  str(obj.y) + str(obj.Vx) + str(obj.Vy),
+                  end="\n", file=out_file)
+
 
 # FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
